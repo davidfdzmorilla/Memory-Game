@@ -1,0 +1,36 @@
+¿Cómo funciona?
+
+Los requisitos para el juego son bastante simples. ¡Primero, debes elegir el tema que quieras, como Pokémon, Star Wars o incluso Peppa Pig!
+
+La dinámica del juego consistirá en presentar un tablero con una serie de cartas boca abajo y revelar todas las parejas antes de que se acabe el tiempo. El usuario pulsará sobre cada carta para darle la vuelta y, si dos de ellas coinciden al estar descubiertas, se pondrán boca arriba. Si no, se volverán a ocultar.
+
+El juego se gana si todos los pares se descubren dentro del límite de tiempo.
+
+Así, el juego tendrá una pantalla inicial para seleccionar una de las tres dificultades y 1 minuto para resolver cada tablero:
+
+    Fácil: tablero 4x4
+    Medio: tablero 4x6 (o 6x4 dependiendo de la pantalla)
+    Difícil: tablero de 5x6 (o 6x5 dependiendo de la pantalla)
+
+La aplicación tendrá una pantalla principal de juego que contiene los siguientes elementos:
+
+    Juego de mesa. El tablero donde el usuario jugará y verá las cartas.
+    Mover contador. Cada vez que se den vuelta 2 cartas, aumentará en 1, tanto si aciertas como si no.
+    Contador de tiempo. ¡Una cuenta regresiva de 1 minuto para revelar todos los pares!
+    Contador de pares restantes.
+    Un botón para volver a la pantalla de selección de nivel.
+
+Requerimientos técnicos
+
+    Cree un código limpio, mantenible y bien diseñado. Esperamos ver una arquitectura buena y clara que permita agregar o modificar la solución sin tantos problemas.
+    Pruebe su código hasta que se sienta cómodo con él. No esperamos una Cobertura de Código del 100%, sino algunas pruebas que ayuden a tener un código base más estable y seguro.
+
+Para comprender cómo toma decisiones durante la implementación, escriba un archivo COMMENTS.md que explique algunas de las partes más importantes de la aplicación. También podrá defender su código a través de Rviewer, una vez que envíe su solución.
+Cómo enviar su solución
+
+    Envíe su código a la rama de desarrollo; lo alentamos a que se comprometa regularmente para mostrar cómo fue su proceso de pensamiento.
+    Cree una nueva solicitud de extracción en la rama principal y combínela.
+
+Una vez fusionado, no podrá cambiar ni agregar nada a su solución, ¡así que verifique que todo sea como esperaba!
+
+Recuerde que no hay cuenta regresiva, ¡así que tómese su tiempo e implemente una solución de la que se sienta orgulloso!

@@ -1,0 +1,62 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Serif:opsz,wght@8..144,800&display=swap');
+
+.home-page {
+  width: 100vw;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.home-page .title {
+  max-width: 100%;
+  height: 50%;
+  display: flex;
+  align-items: center;
+}
+
+.home-page .title h1 {
+  font-size: 50px;
+  text-align: center;
+  padding: 0 1rem;
+  line-height: 100px;
+  font-family: 'Roboto Serif', serif;
+  text-shadow: rgb(93, 90, 90) 5px 5px 1px;
+}
+
+.home-page .nav-level {
+  width: 100%;
+  height: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 1rem;
+}
+
+.home-page .nav-level .easy-button,
+.home-page .nav-level .medium-button,
+.home-page .nav-level .hard-button {
+  width: 80%;
+  max-width: 600px;
+  text-align: center;
+  padding: .7rem 0;
+  text-decoration: none;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #ECF0F1;
+  border-radius: 10px;
+}
+
+.home-page .nav-level .easy-button {
+  background-color: #2ECC71;
+}
+
+.home-page .nav-level .medium-button {
+  background-color: #F1C40F;
+}
+
+.home-page .nav-level .hard-button {
+  background-color: #D35400;
+}

@@ -1,0 +1,5 @@
+.easy-panel-page {
+  height: 90vh;
+  display: flex;
+  flex-direction: column;
+}

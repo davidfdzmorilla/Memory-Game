@@ -1,0 +1,14 @@
+.easy-header {
+  display: flex;
+  background-color: antiquewhite;
+}
+
+.easy-header div {
+  width: 25%;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #34495E;
+  border: 1px solid #7F8C8D;
+}

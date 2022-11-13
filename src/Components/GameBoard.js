@@ -3,7 +3,7 @@ import './GameBoard.css'
 
 
 
-export const GameBoard = ({ tablero, setMov, mov, restMov, setRestMov, secs = 1, setSeconds }) => {
+export const GameBoard = ({ tablero, setMov, mov, restMov, setRestMov, secs, setSeconds }) => {
   const [cards, setCards] = useState([])
   const [imgBack, setImgBack] = useState('')
   const [counter, setCounter] = useState(2)
@@ -20,7 +20,7 @@ export const GameBoard = ({ tablero, setMov, mov, restMov, setRestMov, secs = 1,
     const getImages = () => {
       setImgBack(`https://picsum.photos/200/300?random=${Math.floor(Math.random() * 100)}`)
       for (let i = 0; i < 8; i++) {
-        imagesFrontArray.push({ 'url': `https://picsum.photos/200/300?random=${i}`, 'visible': false, 'adivinada': false })
+        imagesFrontArray.push({ 'url': `https://picsum.photos/200/300?random=${i}`, 'visible': true, 'adivinada': false })
       }
     }
     getImages()
@@ -36,108 +36,96 @@ export const GameBoard = ({ tablero, setMov, mov, restMov, setRestMov, secs = 1,
     console.log('useeffect')
   }, [reset])
 
-
-
-
-  const handleCard = (id, url) => {
-
-    if (secs === 0) {
-      return
-    }
-
-    if (counter === 0) {
-      setMov(mov + 1)
-      // si las cartas no coinciden, se vuelven a ocultar
-      if (firstCard.url !== secondCard.url) {
+  useEffect(() => {
+    if (firstCard && secondCard) {
+      if (firstCard.url === secondCard.url) {
         setCards(cards.map(card => {
           if (card.id === firstCard.id || card.id === secondCard.id) {
-            return { ...card, visible: false }
+            return { ...card, adivinada: true }
           }
           return card
         }))
-        setCounter(2)
-      }
-      // si las cartas coinciden, se quedan visibles
-      else {
-        setCards(cards.map(card => {
-          if (card.id === firstCard.id || card.id === secondCard.id) {
-            setRestMov(restMov + 1)
-            setCounter(2)
-            setFirstCard(null)
-            setSecondCard(null)
-            return { ...card, visible: true, adivinada: true }
-          }
-          return card
-        }))
+        setFirstCard(null)
+        setSecondCard(null)
+        setMov(mov + 1)
+        setRestMov(restMov + 1)
+        if (restMov === 7) {
+          setWinner(true)
+        }
+      } else {
+        setTimeout(() => {
+          setCards(cards.map(card => {
+            if (card.id === firstCard.id || card.id === secondCard.id) {
+              return { ...card, visible: false }
+            }
+            return card
+          }))
+          setFirstCard(null)
+          setSecondCard(null)
+          setMov(mov + 1)
+        }, 1000)
       }
     }
-    // si la carta ya esta adivinada, no se puede seleccionar
-    if (cards[id].adivinada) {
+  }, [secondCard, firstCard, cards, mov, setMov, restMov, setRestMov])
+
+  const handleCardClick = (card) => {
+    if (card.adivinada) {
       return
     }
-    // si la carta ya esta visible, no se puede seleccionar
-    if (cards[id].visible) {
+    if (card.visible) {
       return
     }
-    // si es la primera carta seleccionada
     if (counter === 2) {
-      setFirstCard({ id, url })
-      setCounter(counter - 1)
-      // poner visible la carta
-      const newCards = cards.map((card) => {
-        if (card.id === id) {
-          return { ...card, visible: true }
+      setFirstCard(card)
+      setCards(cards.map(c => {
+        if (c.id === card.id) {
+          return { ...c, visible: true }
         }
-        return card
-      }
-      )
-      setCards(newCards)
-    }
-    // si es la segunda carta seleccionada
-    if (counter === 1) {
-      setSecondCard({ id, url })
-      setCounter(counter - 1)
-      // poner visible la carta
-      const newCards = cards.map((card) => {
-        if (card.id === id) {
-          return { ...card, visible: true }
+        return c
+      }))
+      setCounter(1)
+    } else {
+      setSecondCard(card)
+      setCards(cards.map(c => {
+        if (c.id === card.id) {
+          return { ...c, visible: true }
         }
-        return card
-      }
-      )
-      setCards(newCards)
+        return c
+      }))
+      setCounter(2)
     }
   }
-  console.log(winner)
+
+  const handleReset = () => {
+    setCards([])
+    setReset(!reset)
+    setMov(0)
+    setRestMov(0)
+    setSeconds(60)
+    setWinner(false)
+  }
+
+  console.log(restMov)
 
   return (
-    <section className='game-board-container'>
-      {/* pintar 8 parejas de cartas doble cara random que al hacer click se den la vuelta */}
-      {winner &&
-        <div>
-          <h1>HAS GANADO</h1>
+    <>
+      {!winner && secs > 0 &&
+        <div className="game-board">
+          {cards.map(card => {
+            return (
+              <div className="card" key={card.id} onClick={() => handleCardClick(card)}>
+                <img src={card.visible || card.adivinada ? card.url : imgBack} alt="card" />
+              </div>
+            )
+          })}
         </div>
       }
-      {secs > 0 && restMov < 8 ? cards.map(({ url, visible, id, adivinada }) => {
-        return (
-          <div key={id}>
-            {visible || adivinada ?
-              <img src={url} alt='front' /> :
-              <img src={imgBack} alt='back' onClick={() => handleCard(id, url)} />
-            }
-          </div>
-        )
-      }) : restMov < 8 &&
-      <div>
-        <h3>Se ha acabado el tiempo</h3>
-        <button onClick={() => {
-          setSeconds(60)
-          setCards([])
-          setReset(!reset)
-        }
-        }>Reiniciar</button>
+      <div className="game-board__info">
+        {winner && <h3>¡Ganaste!</h3>}
+        {secs === 0 && <h3>¡Perdiste!</h3>}
+        <button onClick={handleReset}>Reset</button>
       </div>
-      }
-    </section>
-  );
-};
+    </>
+  )
+}
+

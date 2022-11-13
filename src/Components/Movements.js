@@ -1,6 +1,6 @@
 
 export const Movements = ({ mov }) => {
   return (
-    <p>{mov} mov</p>
+    <h2>{mov} mov</h2>
   )
 }

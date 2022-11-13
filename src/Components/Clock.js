@@ -15,10 +15,10 @@ export const Clock = ({ secs, setSeconds }) => {
   return (
     <div>
       {!(secs) ? "" : (
-        <p>
+        <h2>
           {" "}
           {secs < 10 ? `0${secs}` : secs}
-        </p>
+        </h2>
       )}
     </div>
   );

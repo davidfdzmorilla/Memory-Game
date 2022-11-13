@@ -1,6 +1,6 @@
 
-export const RestMovements = () => {
+export const RestMovements = ({ restMov }) => {
   return (
-    <p>3/8</p>
+    <p>{restMov}/8</p>
   )
 }

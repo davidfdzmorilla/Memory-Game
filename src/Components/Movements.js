@@ -1,6 +1,6 @@
 
-export const Movements = () => {
+export const Movements = ({ mov }) => {
   return (
-    <p>1 mov</p>
+    <p>{mov} mov</p>
   )
 }

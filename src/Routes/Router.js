@@ -15,9 +15,9 @@ export const Router = () => {
           <Route path="/hard" element={<HardPanel />} />
         </Routes>
       </BrowserRouter>
-      <footer>
+      {/* <footer>
         <h4 className="link-portfolio">davidfdzmoorilla.dev</h4>
-      </footer>
+      </footer> */}
     </>
   );
 };

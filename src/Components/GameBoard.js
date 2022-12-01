@@ -4,7 +4,7 @@ import Confetti from 'react-confetti'
 
 
 
-export const GameBoard = ({ tablero, setMov, mov, restMov, setRestMov, secs, setSeconds }) => {
+export const GameBoard = ({ difficulty, setMov, mov, restMov, setRestMov, secs, setSeconds }) => {
   const [cards, setCards] = useState([])
   const [imgBack, setImgBack] = useState('')
   const [counter, setCounter] = useState(2)
@@ -13,6 +13,9 @@ export const GameBoard = ({ tablero, setMov, mov, restMov, setRestMov, secs, set
   const [reset, setReset] = useState(false)
   const [winner, setWinner] = useState(false)
 
+  const columns = difficulty[0]
+  const rows = difficulty[1]
+
   /**TODO
    * 
    */
@@ -20,7 +23,7 @@ export const GameBoard = ({ tablero, setMov, mov, restMov, setRestMov, secs, set
     const imagesFrontArray = []
     const getImages = () => {
       setImgBack(`https://picsum.photos/200/300?random=${Math.floor(Math.random() * 100)}`)
-      for (let i = 0; i < 8; i++) {
+      for (let i = 0; i < (columns * rows / 2); i++) {
         imagesFrontArray.push({ 'url': `https://picsum.photos/200/300?random=${i}`, 'visible': false, 'adivinada': false })
       }
     }
@@ -113,12 +116,12 @@ export const GameBoard = ({ tablero, setMov, mov, restMov, setRestMov, secs, set
   return (
     <>
       {!winner && secs > 0 &&
-        <div className="game-board">
+        <div className="game-board" style={{ gridTemplateColumns: `repeat(${columns}, ${100/columns}%)`}}>
           {cards.map((card, i) => {
             return (
               <div className="card" key={card.id} onClick={() => handleCardClick(card)}>
                 <img src={card.visible || card.adivinada ? card.url : imgBack} alt="card" />
-                  {!card.adivinada && !card.visible && <div class="numero" >{i + 1}</div>}
+                  {!card.adivinada && !card.visible && <div className="numero" >{i + 1}</div>}
               </div>
             )
           })}

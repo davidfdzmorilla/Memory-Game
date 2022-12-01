@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import './GameBoard.css'
+import Confetti from 'react-confetti'
 
 
 
@@ -20,7 +21,7 @@ export const GameBoard = ({ tablero, setMov, mov, restMov, setRestMov, secs, set
     const getImages = () => {
       setImgBack(`https://picsum.photos/200/300?random=${Math.floor(Math.random() * 100)}`)
       for (let i = 0; i < 8; i++) {
-        imagesFrontArray.push({ 'url': `https://picsum.photos/200/300?random=${i}`, 'visible': true, 'adivinada': false })
+        imagesFrontArray.push({ 'url': `https://picsum.photos/200/300?random=${i}`, 'visible': false, 'adivinada': false })
       }
     }
     getImages()
@@ -30,11 +31,13 @@ export const GameBoard = ({ tablero, setMov, mov, restMov, setRestMov, secs, set
       const imagesWithId = images.map((image, index) => {
         return { ...image, id: index }
       })
-      setCards(imagesWithId)
+      // mezclar las imagenes
+      const shuffleImages = imagesWithId.sort(() => Math.random() - 0.5)
+      setCards(shuffleImages)
     }
     duplicateImages()
-    console.log('useeffect')
   }, [reset])
+
 
   useEffect(() => {
     if (firstCard && secondCard) {
@@ -105,24 +108,28 @@ export const GameBoard = ({ tablero, setMov, mov, restMov, setRestMov, secs, set
     setWinner(false)
   }
 
-  console.log(restMov)
+  
 
   return (
     <>
       {!winner && secs > 0 &&
         <div className="game-board">
-          {cards.map(card => {
+          {cards.map((card, i) => {
             return (
               <div className="card" key={card.id} onClick={() => handleCardClick(card)}>
                 <img src={card.visible || card.adivinada ? card.url : imgBack} alt="card" />
+                  {!card.adivinada && !card.visible && <div class="numero" >{i + 1}</div>}
               </div>
             )
           })}
         </div>
       }
       <div className="game-board__info">
-        {winner && <h3>¡Ganaste!</h3>}
-        {secs === 0 && <h3>¡Perdiste!</h3>}
+        {winner && <>
+          <h3>¡Ganaste!</h3>
+          <Confetti/>
+        </>}
+        {secs === 0 && !winner && <h3>¡Perdiste!</h3>}
         <button onClick={handleReset}>Reset</button>
       </div>
     </>
